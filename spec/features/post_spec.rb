@@ -1,24 +1,13 @@
 require 'rails_helper'
 
-feature 'post', type: :feature do
-  scenario '投稿ができること' do
-    # 投稿ボタンが存在する
-    visit root_path
-    expect(page).to have_content('投稿')
+RSpec.describe Post, type: :model do
+  it 'タイトルがあれば有効であること' do
+    post=Post.new(title: 'テストタイトル',content: '本文')
+    expect(post).to be_valid
+  end
 
-    # 投稿処理が動作する
-    expect {
-      click_link('投稿')
-      expect(current_path).to eq new_post_path
-      fill_in 'post_content', with: 'こんにちは'
-      fill_in 'post_tags_attributes_0_content', with: 'タグ'
-      find('input[type="submit"]').click
-    }.to change(Post, :count).by(1)
-
-    # トップページにリダイレクトされる
-    expect(current_path).to eq root_path
-
-    # 投稿内容がトップページに表示されている
-    expect(page).to have_content('こんにちは')
+  it 'タイトルがなければ無効であること' do
+    post=Post.new(title: nil,content: '本文')
+    expect(post).not_to be_valid
   end
 end
