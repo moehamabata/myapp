@@ -1,13 +1,24 @@
-require 'rails_helper'
-
-RSpec.describe Post, type: :model do
-  it 'タイトルがあれば有効であること' do
-    post=Post.new(title: 'テストタイトル',content: '本文')
-    expect(post).to be_valid
-  end
-
-  it 'タイトルがなければ無効であること' do
-    post=Post.new(title: nil,content: '本文')
-    expect(post).not_to be_valid
-  end
+class Post < ApplicationRecord
+  validates :title,presence: true
 end
+
+# コードの意味:
+# 1. validates :title
+# - Postモデルのtitle(タイトル)カラムに対してバリデーションを設定する
+# - バリデーション → データが正しいかどうかを確認する
+
+# 2. presence: true
+# - 空では反応しないという意味
+# - titleがnilまたは空文字の場合は保存ができないようにする
+
+# つまり：
+# validates :title, presence: true
+# =「Postを保存するときはタイトルが必ず必要」ということになる
+
+# 学んだこと：
+# - 空というケースはなんでも当てはまるわけではない
+# （例：何かのサイトに登録する際の自分の名前は適当でもいいのか）
+
+# 気付いたこと・反省：
+# - 会員登録などで特に実用されていると感じた
+# - しかし、万能というわけではないので用途に応じて使い分けたい
