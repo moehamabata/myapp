@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby "3.4.4" if ENV['RENDER']
 
-gem "rails", "~> 7.2.2", ">= 7.2.2.2"
+gem "rails", "~> 8.1.3"
 gem "sprockets-rails"
 
 # データベース設定（Render用とローカル用をまとめました）
